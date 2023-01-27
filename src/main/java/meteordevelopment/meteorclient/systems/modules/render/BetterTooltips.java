@@ -62,7 +62,7 @@ public class BetterTooltips extends Module {
     private final Setting<DisplayWhen> displayWhen = sgGeneral.add(new EnumSetting.Builder<DisplayWhen>()
         .name("display-when")
         .description("When to display previews.")
-        .defaultValue(DisplayWhen.Keybind)
+        .defaultValue(DisplayWhen.Always)
         .build()
     );
 

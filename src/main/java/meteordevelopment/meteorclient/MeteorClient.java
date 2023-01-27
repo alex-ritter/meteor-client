@@ -18,7 +18,15 @@ import meteordevelopment.meteorclient.systems.Systems;
 import meteordevelopment.meteorclient.systems.config.Config;
 import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Modules;
-import meteordevelopment.meteorclient.systems.modules.misc.DiscordPresence;
+import meteordevelopment.meteorclient.systems.modules.combat.AutoTotem;
+import meteordevelopment.meteorclient.systems.modules.misc.*;
+import meteordevelopment.meteorclient.systems.modules.movement.AntiLevitation;
+import meteordevelopment.meteorclient.systems.modules.movement.AntiVoid;
+import meteordevelopment.meteorclient.systems.modules.movement.NoFall;
+import meteordevelopment.meteorclient.systems.modules.player.*;
+import meteordevelopment.meteorclient.systems.modules.render.*;
+import meteordevelopment.meteorclient.systems.modules.world.MountBypass;
+import meteordevelopment.meteorclient.systems.modules.world.NoGhostBlocks;
 import meteordevelopment.meteorclient.utils.PostInit;
 import meteordevelopment.meteorclient.utils.PreInit;
 import meteordevelopment.meteorclient.utils.ReflectInit;
@@ -36,6 +44,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.metadata.ModMetadata;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ChatScreen;
+import org.objectweb.asm.util.TraceAnnotationVisitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,7 +88,30 @@ public class MeteorClient implements ClientModInitializer {
         if (!FOLDER.exists()) {
             FOLDER.getParentFile().mkdirs();
             FOLDER.mkdir();
+
+            // Starts default modules
             Systems.addPreLoadTask(() -> Modules.get().get(DiscordPresence.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(BetterTooltips.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(Tracers.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(EntityOwner.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(NoFall.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(BetterBeacons.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(BetterChat.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(BetterTab.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(ServerSpoof.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(MountBypass.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(NoGhostBlocks.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(BossStack.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(Nametags.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(UnfocusedCPU.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(AntiLevitation.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(AntiVoid.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(AutoEat.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(AutoGap.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(GhostHand.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(Portals.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(PotionSaver.class).toggle());
+            Systems.addPreLoadTask(() -> Modules.get().get(AutoTotem.class).toggle());
         }
 
         // Register addons
