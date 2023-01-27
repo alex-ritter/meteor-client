@@ -80,7 +80,7 @@ public class DiscordPresence extends Module {
     private final Setting<List<String>> line2Strings = sgLine2.add(new StringListSetting.Builder()
         .name("line-2-messages")
         .description("Messages used for the second line.")
-        .defaultValue("Meteor on Crack!", "{round(server.tps, 1)} TPS", "Playing on {server.difficulty} difficulty.", "{server.player_count} Players online")
+        .defaultValue("No you", "{round(server.tps, 1)} TPS", "Playing on {server.difficulty} difficulty.", "{server.player_count} Players online")
         .onChanged(strings -> recompileLine2())
         .renderer(StarscriptTextBoxRenderer.class)
         .build()
@@ -103,7 +103,6 @@ public class DiscordPresence extends Module {
     );
 
     private static final RichPresence rpc = new RichPresence();
-    private SmallImage currentSmallImage;
     private int ticks;
     private boolean forceUpdate, lastWasInMainMenu;
 
@@ -145,15 +144,13 @@ public class DiscordPresence extends Module {
 
     @Override
     public void onActivate() {
-        DiscordIPC.start(835240968533049424L, null);
+        DiscordIPC.start(1067918091100622978L, null);
 
         rpc.setStart(System.currentTimeMillis() / 1000L);
 
-        String largeText = "Meteor Client " + MeteorClient.VERSION;
+        String largeText = "Bedrock Client " + MeteorClient.VERSION;
         if (!MeteorClient.DEV_BUILD.isEmpty()) largeText += " Dev Build: " + MeteorClient.DEV_BUILD;
-        rpc.setLargeImage("meteor_client", largeText);
-
-        currentSmallImage = SmallImage.Snail;
+        rpc.setLargeImage("bedrock-block", largeText);
 
         recompileLine1();
         recompileLine2();
@@ -195,16 +192,6 @@ public class DiscordPresence extends Module {
     private void onTick(TickEvent.Post event) {
         boolean update = false;
 
-        // Image
-        if (ticks >= 200 || forceUpdate) {
-            currentSmallImage = currentSmallImage.next();
-            currentSmallImage.apply();
-            update = true;
-
-            ticks = 0;
-        }
-        else ticks++;
-
         if (Utils.canUpdate()) {
             // Line 1
             if (line1Ticks >= line1UpdateDelay.get() || forceUpdate) {
@@ -242,7 +229,7 @@ public class DiscordPresence extends Module {
         }
         else {
             if (!lastWasInMainMenu) {
-                rpc.setDetails("Meteor Client " + (MeteorClient.DEV_BUILD.isEmpty() ? MeteorClient.VERSION : MeteorClient.VERSION + " " + MeteorClient.DEV_BUILD));
+                rpc.setDetails("Bedrock Client " + (MeteorClient.DEV_BUILD.isEmpty() ? MeteorClient.VERSION : MeteorClient.VERSION + " " + MeteorClient.DEV_BUILD));
 
                 if (mc.currentScreen instanceof TitleScreen) rpc.setState("Looking at title screen");
                 else if (mc.currentScreen instanceof SelectWorldScreen) rpc.setState("Selecting world");
@@ -292,26 +279,5 @@ public class DiscordPresence extends Module {
         help.action = () -> Util.getOperatingSystem().open("https://github.com/MeteorDevelopment/meteor-client/wiki/Starscript");
 
         return help;
-    }
-
-    private enum SmallImage {
-        MineGame("minegame", "MineGame159"),
-        Snail("seasnail", "seasnail8169");
-
-        private final String key, text;
-
-        SmallImage(String key, String text) {
-            this.key = key;
-            this.text = text;
-        }
-
-        void apply() {
-            rpc.setSmallImage(key, text);
-        }
-
-        SmallImage next() {
-            if (this == MineGame) return Snail;
-            return MineGame;
-        }
     }
 }
