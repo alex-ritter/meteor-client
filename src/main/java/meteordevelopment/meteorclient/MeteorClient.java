@@ -20,7 +20,6 @@ import meteordevelopment.meteorclient.systems.modules.Categories;
 import meteordevelopment.meteorclient.systems.modules.Modules;
 import meteordevelopment.meteorclient.systems.modules.combat.AutoTotem;
 import meteordevelopment.meteorclient.systems.modules.misc.*;
-import meteordevelopment.meteorclient.systems.modules.movement.AntiLevitation;
 import meteordevelopment.meteorclient.systems.modules.movement.AntiVoid;
 import meteordevelopment.meteorclient.systems.modules.movement.NoFall;
 import meteordevelopment.meteorclient.systems.modules.player.*;
@@ -114,7 +113,6 @@ public class MeteorClient implements ClientModInitializer {
             Systems.addPreLoadTask(() -> Modules.get().get(BossStack.class).toggle());
             Systems.addPreLoadTask(() -> Modules.get().get(Nametags.class).toggle());
             Systems.addPreLoadTask(() -> Modules.get().get(UnfocusedCPU.class).toggle());
-            Systems.addPreLoadTask(() -> Modules.get().get(AntiLevitation.class).toggle());
             Systems.addPreLoadTask(() -> Modules.get().get(AntiVoid.class).toggle());
             Systems.addPreLoadTask(() -> Modules.get().get(AutoEat.class).toggle());
             Systems.addPreLoadTask(() -> Modules.get().get(AutoGap.class).toggle());
